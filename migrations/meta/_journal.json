@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1704219731419,
+      "tag": "0000_fair_zeigeist",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1704260586104,
+      "tag": "0001_bored_dracula",
+      "breakpoints": true
+    }
+  ]
+}
