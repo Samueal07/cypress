@@ -8,7 +8,7 @@ import {
   timestamp,
   uuid,
 } from "drizzle-orm/pg-core";
-import { prices, subscriptionStatus } from "../../../migrations/schema";
+import { prices, subscriptionStatus, users } from "../../../migrations/schema";
 
 //we put name of the column in the database uuid comes for pgress-core
 export const workspaces = pgTable("workspaces", {
@@ -116,4 +116,16 @@ export const subscriptions = pgTable("subscriptions", {
     withTimezone: true,
     mode: "string",
   }).default(sql`now()`),
+});
+
+export const collaborators = pgTable("collaborators", {
+  workspaceId: uuid("workspace_id")
+    .notNull()
+    .references(() => workspaces.id, { onDelete: "cascade" }),
+  createdAt: timestamp("created_at", { withTimezone: true, mode: "string" })
+    .defaultNow()
+    .notNull(),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
 });

@@ -19,7 +19,14 @@ interface AppState {
   workspaces: appWorkspacesType[] | [];
 }
 //create our first type, this will make sense later on in action
-type Action = { type: "ADD_WORKSPACE"; payload: appWorkspacesType };
+type Action =
+  | {
+      type: "SET_WORKSPACES";
+      payload: { workspaces: appWorkspacesType[] | [] };
+    }
+  | { type: "ADD_WORKSPACE"; payload: appWorkspacesType }
+  | { type: "DELETE_WORKSPACE"; payload: string }
+  | { type: "UPDATE_WORKSPACE"; payload: Partial<appWorkspacesType> };
 
 // our initial state
 const initialState: AppState = { workspaces: [] };
@@ -30,6 +37,32 @@ const appReducer = (
   action: Action
 ): AppState => {
   switch (action.type) {
+    case "SET_WORKSPACES": {
+      return {
+        ...state,
+        workspaces: action.payload.workspaces,
+      };
+    }
+    case "DELETE_WORKSPACE":
+      return {
+        ...state,
+        workspaces: state.workspaces.filter(
+          (workspace) => workspace.id !== action.payload
+        ),
+      };
+    case "UPDATE_WORKSPACE":
+      return {
+        ...state,
+        workspaces: state.workspaces.map((workspace) => {
+          if (workspace.id == action.payload.id) {
+            return {
+              ...workspace,
+              ...action.payload,
+            };
+          }
+          return workspace;
+        }),
+      };
     case "ADD_WORKSPACE":
       return {
         ...state,

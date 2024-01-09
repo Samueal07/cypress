@@ -15,6 +15,13 @@
       "when": 1704260586104,
       "tag": "0001_bored_dracula",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1704759080944,
+      "tag": "0002_legal_karen_page",
+      "breakpoints": true
     }
   ]
 }
