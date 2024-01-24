@@ -129,3 +129,12 @@ export const addCollaborators = async (users: User[], workspaceId: string) => {
       await db.insert(collaborators).values({ workspaceId, userId: user.id });
   });
 };
+
+export const getUsersFromSearch = async (email: string) => {
+  if (!email) return [];
+  const accounts = db
+    .select()
+    .from(users)
+    .where(ilike(users.email, `${email}%`));
+  return accounts;
+};

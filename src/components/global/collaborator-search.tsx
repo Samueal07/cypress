@@ -1,7 +1,7 @@
-'use client';
-import { useSupabaseUser } from '@/lib/providers/supabase-user-provider';
-import { User } from '@/lib/supabase/supabase.types';
-import React, { useEffect, useRef, useState } from 'react';
+"use client";
+import { useSupabaseUser } from "@/lib/providers/supabase-user-provider";
+import { User } from "@/lib/supabase/supabase.types";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Sheet,
   SheetContent,
@@ -9,14 +9,14 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/components/ui/sheet';
-import { Label } from '../ui/label';
-import { Search } from 'lucide-react';
-import { Input } from '../ui/input';
-import { ScrollArea } from '../ui/scroll-area';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { Button } from '../ui/button';
-import { getUsersFromSearch } from '@/lib/supabase/queries';
+} from "@/components/ui/sheet";
+import { Label } from "../ui/label";
+import { Search } from "lucide-react";
+import { Input } from "../ui/input";
+import { ScrollArea } from "../ui/scroll-area";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
+import { getUsersFromSearch } from "@/lib/supabase/queries";
 
 interface CollaboratorSearchProps {
   existingCollaborators: User[] | [];
@@ -30,7 +30,36 @@ const CollaboratorSearch: React.FC<CollaboratorSearchProps> = ({
   getCollaborator,
 }) => {
   const { user } = useSupabaseUser();
-  const [searchResults, setSearchResults] = useState<User[] | []>([]);
+  const [searchResults, setSearchResults] = useState<User[] | []>([
+    // {
+    //dummy data
+    //   id: "1",
+    //   fullName: "John Doe",
+    //   avatarUrl: "https://example.com/johndoe/avatar.jpg",
+    //   billingAddress: {
+    //     street: "123 Main St",
+    //     city: "Cityville",
+    //     country: "Countryland",
+    //   },
+    //   updatedAt: "2024-01-15T12:30:00Z", // Use an actual timestamp here
+    //   paymentMethod: { type: "credit_card", lastFourDigits: "1234" },
+    //   email: "john.doe@example.com",
+    // },
+    // {
+    //   id: "2",
+    //   fullName: null,
+    //   avatarUrl: null,
+    //   billingAddress: {
+    //     street: "456 Oak St",
+    //     city: "Townsville",
+    //     country: "Countryland",
+    //   },
+    //   updatedAt: null,
+    //   paymentMethod: { type: "paypal", email: "jane.smith@example.com" },
+    //   email: "jane.smith@example.com",
+    // },
+    // Add more user objects as needed
+  ]);
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
@@ -39,14 +68,14 @@ const CollaboratorSearch: React.FC<CollaboratorSearchProps> = ({
     };
   }, []);
 
-  const getUserData = ()=>{}
+  const getUserData = () => {};
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (timerRef) clearTimeout(timerRef.current);
-    // timerRef.current = setTimeout(async () => {
-    //   const res = await getUsersFromSearch(e.target.value);
-    //   setSearchResults(res);
-    // }, 450);
+    timerRef.current = setTimeout(async () => {
+      const res = await getUsersFromSearch(e.target.value);
+      setSearchResults(res);
+    }, 450);
   };
 
   const addCollaborator = (user: User) => {
